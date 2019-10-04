@@ -1,0 +1,42 @@
+version: '3.1'
+services:
+    webserver-airflow:
+        image: puckel/docker-airflow:1.10.2 
+        environment:
+           # Loads DAG examples
+            - LOAD_EX=y
+            - FERNET_KEY=RH02mktJ4YTZsH2czjO4IWV-ll5F2l8pAoxOktDRHi4=
+        networks:
+          airflow-output-invalidation-pattern-network:
+            ipv4_address: 191.18.0.20
+        volumes:
+            - ./dags:/usr/local/airflow/dags
+            - ./requirements.txt:/requirements.txt
+        ports:
+            - "8081:8080"
+        command: webserver & airflow scheduler
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+    postgresql:
+        image: postgres:11
+        environment:
+          - POSTGRES_USER=airflow_test
+          - POSTGRES_PASSWORD=airflow_test
+          - POSTGRES_DB=output_invalidation_pattern
+        networks:
+          airflow-output-invalidation-pattern-network:
+            ipv4_address: 191.18.0.21
+        hostname: postgress_local
+        ports:
+            - "5432:5432"
+ 
+networks:
+  airflow-output-invalidation-pattern-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 191.18.0.0/16
