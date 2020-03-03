@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+    webserver-airflow:
+        image: puckel/docker-airflow:1.10.9 
+        environment: 
+            - FERNET_KEY=RH02mktJ4YTZsH2czjO4IWV-ll5F2l8pAoxOktDRHi4=
+        volumes:
+            - ./dags:/usr/local/airflow/dags
+            - ./requirements.txt:/requirements.txt
+        ports:
+            - "8081:8080"
+        command: webserver 
