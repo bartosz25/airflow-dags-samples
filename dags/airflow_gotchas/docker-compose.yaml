@@ -5,7 +5,7 @@ services:
         restart: always
         environment:
            # Loads DAG examples
-            - LOAD_EX=y
+            - LOAD_EX=n
         networks:
           airflow-sandbox-network:
             ipv4_address: 112.18.0.22
