@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+    webserver:
+        image: puckel/docker-airflow:1.10.7
+        environment:
+           # Loads DAG examples
+            - LOAD_EX=n
+        volumes:
+            - ./dags:/usr/local/airflow/dags
+        ports:
+            - "8081:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3 
