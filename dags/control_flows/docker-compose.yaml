@@ -2,7 +2,6 @@ version: '3.1'
 services:
     webserver:
         image: puckel/docker-airflow:1.10.7
-        restart: always
         environment:
            # Loads DAG examples
             - LOAD_EX=n

@@ -7,9 +7,8 @@ from airflow.sensors.base_sensor_operator import BaseSensorOperator
 
 
 class PokeCountBasedSensor(BaseSensorOperator):
-    def __init__(self, pokes_number, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(PokeCountBasedSensor, self).__init__(*args, **kwargs)
-        self.pokes_number = pokes_number
 
     def poke(self, context):
         # To create the file:
@@ -39,7 +38,6 @@ with dag:
     )
     job_sensor = PokeCountBasedSensor(
         task_id='job_sensor',
-        pokes_number=2,
         mode='reschedule',
         poke_interval=2  # retry every 2 seconds
     )

@@ -42,7 +42,7 @@ with dag:
         op_kwargs={'word': 'bar'}
     )
     foo_bar_printer = PythonOperator(
-        task_id='bar_printer',
+        task_id='foo_bar_printer',
         python_callable=print_hello,
         provide_context=True,
         op_kwargs={'word': 'foo bar'}
