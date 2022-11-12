@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+    webserver:
+        image: apache/airflow:2.4.2-python3.9
+        environment:
+          - _AIRFLOW_WWW_USER_USERNAME=admin
+          - _AIRFLOW_WWW_USER_PASSWORD=admin
+          - _AIRFLOW_WWW_USER_CREATE=true
+          - _AIRFLOW_DB_UPGRADE=true
+        volumes:
+            - ./dags:/opt/airflow/dags
+            - ./scripts:/tmp/scripts
+        ports:
+            - "8080:8080"
+        entrypoint:  /bin/sh -c
+        command: /tmp/scripts/entrypoint.sh
