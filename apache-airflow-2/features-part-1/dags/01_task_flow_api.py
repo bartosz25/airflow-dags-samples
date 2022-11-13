@@ -10,20 +10,12 @@ The DAG shows new features of the Task Flow API, including:
 In my example I'm writing a dummy representation of an ETL pipeline with an output copied to 2 different stores.
 """
 import logging
-
-from airflow.decorators import dag, task
 from datetime import datetime
 
-import requests
-import json
-
+from airflow.decorators import dag, task
 from airflow.models import TaskInstance
-from airflow.operators.bash import BashOperator
 from airflow.operators.python import get_current_context
 from airflow.sensors.python import PythonSensor
-
-url = 'https://covidtracking.com/api/v1/states/'
-state = 'wa'
 
 default_args = {
     'start_date': datetime(2022, 1, 1)
